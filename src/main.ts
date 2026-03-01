@@ -192,12 +192,27 @@ function parseWakeup(wakeupRaw: string): SharedData {
 //#region File I/O and Build
 
 function findWakeupFiles() {
+  if (!fs.existsSync(inputDir) || !fs.statSync(inputDir).isDirectory()) {
+    try {
+      fs.mkdirSync(inputDir, { recursive: true });
+    } catch {}
+    console.log(
+      chalk.red(
+        `输入目录 ${inputDir} 不存在或不是一个文件夹。请确保创建了 ${inputDir} 文件夹并将 .wakeup_schedule 文件放在其中。`,
+      ),
+    );
+    return [];
+  }
   const files = fs.readdirSync(inputDir);
   const wakeupFiles = files.filter((file) => file.endsWith(".wakeup_schedule"));
-  if (wakeupFiles.length === 0)
-    throw new Error(
-      "未找到 .wakeup_schedule 文件，请确保将文件放在 input 文件夹内。",
+  if (wakeupFiles.length === 0) {
+    console.log(
+      chalk.red(
+        `输入目录 ${inputDir} 未找到 .wakeup_schedule 文件，请确保将文件放在其中。`,
+      ),
     );
+    return [];
+  }
   return wakeupFiles.map((name) => path.join(inputDir, name));
 }
 
