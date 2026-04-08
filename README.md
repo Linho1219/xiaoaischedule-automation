@@ -1,4 +1,8 @@
-# xiaoaischedule-automation
+# ~~xiaoaischedule-automation~~
+
+> [!important]
+>
+> 建议使用 mposed 模块 [课表修复-R](https://modules.lsposed.org/module/com.mercury.xiaoaiimport/)。本项目已存档。
 
 小爱课程表自动化导入。
 
